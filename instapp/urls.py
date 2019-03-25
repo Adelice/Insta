@@ -1,7 +1,14 @@
 from django.conf.urls import url
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
-app_name = 'instapp' # So we can use it like: {% url 'mymodule:user_register' %} on our template. 
+ # So we can use it like: {% url 'mymodule:user_register' %} on our template. 
 urlpatterns = [
-    url(r'^register/$', views.user_register, name='user_register')
+    
+    url(r'^home/$', views.home, name='home'),
+    url(r'^$',views.signup, name='signup'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
 ]
+if settings.DEBUG:
+    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

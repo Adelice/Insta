@@ -1,54 +1,47 @@
 
-
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import RegisterForm
 
-def user_register(request):
-    # if this is a POST request we need to process the form data
-    template = 'all-insta/register.html'
+
+@login_required(login_url='/')
+def home(request):
+    images = Image.get_all_images()
     
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = RegisterForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            if User.objects.filter(username=form.cleaned_data['username']).exists():
-                return render(request, template, {
-                    'form': form, 
-                    'error_message': 'Username already exists.'
-                })
-            elif User.objects.filter(email=form.cleaned_data['email']).exists():
-                return render(request, template, {
-                    'form': form, 
-                    'error_message': 'Email already exists.'
-                })
-            elif form.cleaned_data['password'] != form.cleaned_data['password_repeat']:
-                return render(request, template, {
-                    'form': form, 
-                    'error_message': 'Passwords do not match.'
-                })
-            else:
-                # Create the user: 
-                user = User.objects.create_user(
-                    form.cleaned_data['username'], 
-                    form.cleaned_data['email'], 
-                    form.cleaned_data['password']
-                )
-                user.first_name = form.cleaned_data['first_name']
-                user.last_name = form.cleaned_data['last_name']
-                user.phone_number = form.cleaned_data['phone_number']
-                user.save()
-                
-                # Login the user
-                login(request, user)
-                
-                # redirect to accounts page:
-                return HttpResponseRedirect('/all-insta/account')
+    return render(request, 'index.html', {'images':images})
 
-   # No post data availabe, let's just show the page.
+def signup(request):
+    if request.user.is_authenticated():
+        return redirect('home')
     else:
-        form = RegisterForm()
+        if request.method == 'POST':
+            form = SignupForm(request.POST)
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                to_email = form.cleaned_data.get('email')
+                send_activation_email(user, current_site, to_email)
+                return HttpResponse('Confirm your email address to complete registration')
+        else:
+            form = SignupForm()
+            return render(request, 'registration/signup.html',{'form':form})
 
-    return render(request, template, {'form': form})
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        return HttpResponse('Thank you for confirming email. Now login to your account')
+    else:
+        return HttpResponse('Activation link is invalid')
+    
