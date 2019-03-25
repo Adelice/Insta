@@ -1,4 +1,7 @@
 from django import forms
+from .models import Image
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text = 'Required')

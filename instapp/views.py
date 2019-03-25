@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-
+from .forms import SignupForm
 
 @login_required(login_url='/')
 def home(request):
@@ -27,7 +27,7 @@ def signup(request):
                 return HttpResponse('Confirm your email address to complete registration')
         else:
             form = SignupForm()
-            return render(request, 'registration/signup.html',{'form':form})
+            return render(request, 'registration/registration_form.html',{'form':form})
 
 def activate(request, uidb64, token):
     try:
