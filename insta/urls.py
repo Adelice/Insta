@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'',include('instapp.urls')),
     url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^logout/$',views.logout, {"next_page": '/'}),
 
 ]
