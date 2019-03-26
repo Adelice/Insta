@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render,redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponse
-from .forms import SignupForm,ProfileForm,ImageForm
+from .forms import SignupForm,ImageForm,ProfileForm
 from .email import send_activation_email
 from .tokens import account_activation_token
 from .models import Image, Profile
@@ -62,6 +62,8 @@ def profile(request, username):
     title = f'@{profile.username} Instagram photos and videos'
 
     return render(request, 'profile/profile.html', {'title':title, 'profile':profile, 'profile_details':profile_details, 'images':images})
+
+    
 @login_required(login_url='/accounts/login')
 def upload_image(request):
     if request.method == 'POST':
@@ -69,14 +71,13 @@ def upload_image(request):
         if form.is_valid():
             upload = form.save(commit=False)
             upload.profile = request.user
-            # print(f'image is {upload.image}')
+           
             upload.save()
             return redirect('profile', username=request.user)
     else:
         form = ImageForm()
     
     return render(request, 'profile/upload_image.html', {'form':form})
-
 @login_required(login_url='/accounts/login')
 def edit_profile(request):
     if request.method == 'POST':
@@ -89,7 +90,21 @@ def edit_profile(request):
     else:
         form = ProfileForm()
 
-    return render(request, 'profile/edit_profile.html', {'form':form})
-   
+    return render(request, 'profile/edit_profile.html', {'form':form})    
+login_required(login_url='/accounts/login')
+def single_image(request, image_id):
+    image = Image.get_image_id(image_id)
+    comments = Comments.get_comments_by_images(image_id)
 
-    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.image = image
+            comment.user = request.user
+            comment.save()
+            return redirect('single_image', image_id=image_id)
+    else:
+        form = CommentForm()
+        
+    return render(request, 'image.html', {'image':image, 'form':form, 'comments':comments})    

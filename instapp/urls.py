@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^user/(?P<username>\w{0,50})',views.profile,name='profile'),
     url(r'^upload/$', views.upload_image, name='upload_image'),
     url(r'^accounts/edit/',views.edit_profile, name='edit_profile'),
+    url(r'^image/(?P<image_id>\d+)', views.single_image, name='single_image'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

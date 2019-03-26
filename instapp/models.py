@@ -37,7 +37,7 @@ class Image(models.Model):
         return images
 class Profile(models.Model):
     
-    prof_pic = models.ImageField(upload_to = 'profile_pictures/', blank=True)
+    prof_pic = models.ImageField(upload_to = 'profile_pictures/')
     bio = HTMLField()
     user = models.OneToOneField(User,on_delete=models.CASCADE, primary_key=True)
 

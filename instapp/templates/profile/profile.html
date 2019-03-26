@@ -8,7 +8,7 @@
             <div class="row top-section">
                 <div class="col-md-5 profile-image">
                     {% if profile_details.prof_pic %}
-                    <img src="{{profile_details.prof_pic.cdn_url}}" alt="profile-photo">
+                    <img src="{{profile_details.prof_pic.url}}" width="300" height="300" alt="profile-photo">
                     {% else %}
                     <img src="/static/img/avatah.png" alt="avatar">
                     {% endif %}
@@ -29,6 +29,8 @@
                         <li class="list-inline-item">
                             <a href="#" class="btn btn-primary">Follow</a>
                         </li>
+                       
+
                         {% endif %}
                     </ul>
                     <ul class="list-inline">
@@ -42,8 +44,9 @@
                             <span class="font-weight-bold">0 </span> Following
                         </li>
                     </ul>
-                    <p class="font3">{{profile_details.bio|safe}}</p>
+                    
                     {% if profile.username == user.username %}
+                    <p class="font3">{{profile_details.bio|safe}}</p>
                     <p><a href="{% url 'upload_image' %}">Add Image</a></p>
                     {% endif %}
                 </div>
@@ -53,8 +56,8 @@
     <hr>
     <div class="row user-images">
         {% for img in images %}
-        <div class="col-md-4 images">
-            <img src="{{img.photo.cdn_url}}" alt="Image">
+        <div class="col-md-4 images" >
+            <img src="{{img.image.url}}" alt="Image" width="300" height="300">
         </div>
         {% empty %}
         <div class="col-md-12">
