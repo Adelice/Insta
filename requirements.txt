@@ -1,0 +1,4 @@
+Django==1.11
+django-bootstrap3==10.0.1
+django-bootstrap4==0.0.8
+pytz==2018.5

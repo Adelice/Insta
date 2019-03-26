@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render,redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponse
-from .forms import SignupForm
+from .forms import SignupForm,ProfileForm,ImageForm
 from .email import send_activation_email
 from .tokens import account_activation_token
 from .models import Image, Profile

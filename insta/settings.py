@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     # 'pyuploadcare.dj',
     'instapp',
     'bootstrap3',
+    'bootstrap4',
     'tinymce',
     'django.contrib.admin',
     'django.contrib.auth',
