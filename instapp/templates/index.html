@@ -1,15 +1,15 @@
 {% extends 'all-insta/base.html' %} 
 
 {% block content %}
-<div class="container top">
+<div class="container top" style="margin-left:25%;font-family: 'Germania One', cursive;">
     <div class="row">
         <div class="col-md-7">
             {% for img in images %}
-            <div class="home-images">
+            <div class="home-images" ">
                 <p class="home-text">
                     <a href="{% url 'profile' username=img.profile.username %}">{{img.profile.username}}</a>
                 </p>
-                <img src="{{img.image.url}}" alt="Image">
+                <img src="{{img.image.url}}" alt="Image" width="600" height="500">
                 <ul class="list-inline home-text">
                     <li class="list-inline-item">
                         <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>

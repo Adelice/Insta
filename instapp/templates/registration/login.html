@@ -3,14 +3,18 @@
 
 
 {% block content %}
-<div class="container">
+<html>
+<body style="background-image:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.pexels.com/photos/238480/pexels-photo-238480.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') ;background-size:cover;background-repeat: no-repeat;background-position: center;background-origin: border-box; color:powderblue;font-family: 'Germania One', cursive;">
+<div class="container" style="margin-left: 40%; margin-top:10%">
     <div class="row sign-up">
         <div class="col-md-4">
             {% if form.errors %}
             <p class="small">Password or Username is incorrect</p>
             {% endif %}
             <div class="section">
-                <h1>InstApp</h1>
+
+                <h1 style="text-align: center">InstApp</h1>
+                <h3>Login</h3>
                 <div class="form-section">
                     <form action="/accounts/login/" method="POST">
                         {% csrf_token %}
@@ -28,4 +32,6 @@
         </div>
     </div>
 </div>
+</body>
+</html>
 {% endblock %}
