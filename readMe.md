@@ -26,5 +26,5 @@ python3.6 manage.py runserver
 ### Support and Contact details
 contact me on nancytoniw@gmail.com for any comments,reviews or advices.
 ### License
-Copyright (c) Nancy Unmutoniwase
+Copyright (c) Nancy Adelice Unmutoniwase
 
