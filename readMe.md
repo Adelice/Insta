@@ -3,7 +3,7 @@ its a web clone of instagram
 ### Description
 This is a simple web clone of the instagram website. A user can create an account and sign into it. The site supports uploading images, and following other users. users can view photos uploaded by other users in the home page of app.
 
-### Set up and installations
+### Setup and installations
 #### Prerequisites
 1. Ubuntu Software
 2. Python3.6
